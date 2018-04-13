@@ -1,0 +1,24 @@
+{
+  "name": "flash",
+  "version": "1.0.0",
+  "description": "",
+  "main": "demo.js",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "lodash": "^4.17.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heshamelmasry77/flash.git"
+  },
+  "author": "hesham el masry",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heshamelmasry77/flash/issues"
+  },
+  "homepage": "https://github.com/heshamelmasry77/flash#readme"
+}

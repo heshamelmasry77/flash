@@ -1,0 +1,1 @@
+exports.myTeXT = 'HELLO';
