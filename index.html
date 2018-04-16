@@ -12,28 +12,25 @@
         crossorigin="anonymous"></script>
 
 <div class="container">
-    <br/>
-    <div class="jumbotron">
-        <h1 class="display-4">Send Message</h1>
-        <br/>
-        <input class="form-control" placeholder="Name">
-        <br/>
-        <button id="send" class="btn btn-success">Send</button>
-    </div>
-    <div id="messages">
-
-    </div>
-
 
     <hr/>
     <div class="main">
+        <div class="jumbotron">
+            <h1 class="display-4">Chat Messages</h1>
+            <br/>
+            <div id="messages">
+
+            </div>
+            <br/>
+        </div>
         <div>User: <span id="user"></span></div>
         <br/>
         <div>Chat bot: <span id="chatbot"></span></div>
         <br/>
         <div><input id="input" type="text" placeholder="Say anything to flash" autocomplete="off"></div>
         <br/>
-        <button id="sendTwo" class="btn btn-success">Send</button>
+        <button id="sendMessage" class="btn btn-success">Send</button>
+        <button id="sendData" class="btn btn-success">Analyse Messages</button>
 
     </div>
 </div>
@@ -60,7 +57,7 @@
     ["Nothing much", "About to go to sleep", "Can you guest?", "I don't know actually"],
     ["I am 1 day old"],
     ["I am just a bot", "I am a bot. What are you?"],
-    ["Kani Veri", "My God"],
+    ["Hesham El Masry", "My God"],
     ["I am nameless", "I don't have a name"],
     ["I love you too", "Me too"],
     ["Have you ever felt bad?", "Glad to hear it"],
@@ -71,22 +68,23 @@
   ];
   const alternative = ["Haha...", "Eh..."];
 
+  let chatData = [];
+
   // this is my document.ready
   $(() => {
     console.log('loaded');
-
-    $('#sendTwo').click(() => {
+    $('#sendMessage').click(() => {
       let input = $('#input').val();//get value of the input field
       console.log(input);
       $('#user').text(input); //add this input field value to the with id user
-      $('#messages').append(input); //add this the div with id messages
+      $('#messages').append(`<h4> <span>User:</span>` + input +`</h4> <br/>`); //add this the div with id messages
+      chatData.push(input);
       output(input); // run output to add value to the chatbox box
     });
 
-    // $('#send').click(() => {
-    //   addMessages({name: 'Hesham', message: 'test message from hesham'});
-    // });
-    // getMessages();
+    $('#sendData').click(() => {
+      submitMessages(chatData);
+    });
   });
 
   function output(input) {
@@ -103,12 +101,14 @@
       if (compare(trigger, reply, text)) { // if you can compare three of them
         result = compare(trigger, reply, text);
       } else {
-        result =  alternative[Math.floor(Math.random()*alternative.length)]; // its like put any other alternative
+        result = alternative[Math.floor(Math.random() * alternative.length)]; // its like put any other alternative
       }
     }
 
+    $('#messages').append(`<h4> <span>Bot:</span>` + result +`</h4> <br/>`); //add this the div with id messages
 
     $('#chatbot').text(result); //add input text to the div with chatbot id
+    chatData.push(result);
     $('#input').val(''); //clear input field
 
   }
@@ -126,25 +126,26 @@
     return item;
   }
 
-  function addMessages(message) {
-    $('#messages').append(`<h4> ${message.name} </h4> <p>${message.message}</p> `);
-  }
+  function submitMessages(messages) {
+    console.log('chatData', {messages});
+    // $.post('http://localhost:3008/messages',  {name: 'yasmine', message: 'test3'},
+    //     function(response){ // Required Callback Function
+    //       console.log(response);
+    //     });
 
-  function getMessages() {
-    $.get('http://localhost:3008/messages', (data) => {
-      console.log(data);
-      // data.forEach(function (element) {
-      //   // element here is every single message i have in my array
-      //   addMessages(element);
-      // }, this);
 
-      // Since the signature of our addMessages function matches
-      // the signature of the callback we're supplying,'
-      // ' we don't need a callback at all. We can simply call
-      // forEach and then supply the name of our function,
-      // addMessages. And now our addMessages function will be
-      // called directly instead of going through an in-line callback.
-      data.forEach(addMessages);
+    $.ajax({
+      'type': 'post',
+      'contentType': 'application/json',
+      'cache': false,
+      'data': JSON.stringify({name: 'yasmine', message: 'test3'}),
+      'url': 'http://localhost:3008/messages',
+      'dataType': 'json',
+      'timeout': 50000
+    }).done(function (response) {
+      callback(response);
+    }).fail(function (error) {
+      // Total fail.
     });
   }
 
