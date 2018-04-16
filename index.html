@@ -2,8 +2,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
       integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
         integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
@@ -26,17 +25,36 @@
     </div>
 </div>
 <script>
-    // this is my document.ready
+  // this is my document.ready
   $(() => {
     console.log('loaded');
-    $('#send').click(()=>{
-      addMessages({name:'Hesham', message:'test message from hesham'});
+    $('#send').click(() => {
+      addMessages({name: 'Hesham', message: 'test message from hesham'});
     });
+    getMessages();
   });
-    
-    function  addMessages(message) {
-      $('#messages').append(`<h4> ${message.name} </h4> <p>${message.message}</p> `);
-    }
+
+  function addMessages(message) {
+    $('#messages').append(`<h4> ${message.name} </h4> <p>${message.message}</p> `);
+  }
+
+  function getMessages() {
+    $.get('http://localhost:3008/messages', (data) => {
+      console.log(data);
+      // data.forEach(function (element) {
+      //   // element here is every single message i have in my array
+      //   addMessages(element);
+      // }, this);
+
+      // Since the signature of our addMessages function matches
+      // the signature of the callback we're supplying,'
+      // ' we don't need a callback at all. We can simply call
+      // forEach and then supply the name of our function,
+      // addMessages. And now our addMessages function will be
+      // called directly instead of going through an in-line callback.
+      data.fo rEach(addMessages);
+    });
+  }
 </script>
 
 </html>
