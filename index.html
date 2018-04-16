@@ -77,7 +77,7 @@
       let input = $('#input').val();//get value of the input field
       console.log(input);
       $('#user').text(input); //add this input field value to the with id user
-      $('#messages').append(`<h4> <span>User:</span>` + input +`</h4> <br/>`); //add this the div with id messages
+      $('#messages').append(`<h4> <span>User:</span>` + input + `</h4> <br/>`); //add this the div with id messages
       chatData.push(input);
       output(input); // run output to add value to the chatbox box
     });
@@ -105,7 +105,7 @@
       }
     }
 
-    $('#messages').append(`<h4> <span>Bot:</span>` + result +`</h4> <br/>`); //add this the div with id messages
+    $('#messages').append(`<h4> <span>Bot:</span>` + result + `</h4> <br/>`); //add this the div with id messages
 
     $('#chatbot').text(result); //add input text to the div with chatbot id
     chatData.push(result);
@@ -128,25 +128,24 @@
 
   function submitMessages(messages) {
     console.log('chatData', {messages});
-    // $.post('http://localhost:3008/messages',  {name: 'yasmine', message: 'test3'},
-    //     function(response){ // Required Callback Function
-    //       console.log(response);
-    //     });
-
 
     $.ajax({
       'type': 'post',
       'contentType': 'application/json',
       'cache': false,
-      'data': JSON.stringify({name: 'yasmine', message: 'test3'}),
+      async: true,
+      'data': JSON.stringify(messages),
       'url': 'http://localhost:3008/messages',
       'dataType': 'json',
-      'timeout': 50000
-    }).done(function (response) {
-      callback(response);
-    }).fail(function (error) {
-      // Total fail.
-    });
+      'timeout': 50000,
+      success: function (res) {
+        console.log(res);
+      },
+      error: function (err) {
+        alert(err.responseText)
+      }
+    })
+
   }
 
 

@@ -17,11 +17,12 @@ app.get('/messages', (req, res) => {
 });
 
 
-app.post('/messages', (req, res) => {
+app.post('/messages', (req, res, next) => {
   console.log(req.body);
   // adding the new message to my array messages
   messages.push(req.body);
-  res.sendStatus(200);
+  res.send({'mesasge':'done'});
+   next();
 });
 
 
