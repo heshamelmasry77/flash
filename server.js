@@ -1,5 +1,5 @@
 const express = require('express');
-const bodyParser =  require('body-parser');
+const bodyParser = require('body-parser');
 const app = express();
 
 app.use(express.static(__dirname));
@@ -21,12 +21,11 @@ app.post('/messages', (req, res, next) => {
   console.log(req.body);
   // adding the new message to my array messages
   messages.push(req.body);
-  res.send({'mesasge':'done'});
-   next();
+  res.send({'mesasge': 'done'});
+  next();
 });
 
 
-
-const server = app.listen(3008, () => {
+const server = app.listen(process.env.PORT || 3008, () => {
   console.log('server is listening on port', server.address().port)
 });
