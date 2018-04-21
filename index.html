@@ -71,6 +71,7 @@
 
   // this is my document.ready
   $(() => {
+    initialOutput();
     console.log('loaded');
     $('#sendMessage').click(() => {
       let input = $('#input').val();//get value of the input field
@@ -89,6 +90,7 @@
   function output(input) {
     //try to use eval for calculations
     let result;
+
     try {
       result = input + '=' + eval(input);
     }
@@ -104,6 +106,7 @@
       }
     }
 
+
     $('#messages').append(`<h4> <span>Bot:</span>` + result + `</h4> <br/>`); //add this the div with id messages
 
     $('#chatbot').text(result); //add input text to the div with chatbot id
@@ -111,6 +114,12 @@
     $('#input').val(''); //clear input field
 
   }
+
+  function initialOutput() {
+    $('#chatbot').text('Hi'); //add input text to the div with chatbot id
+
+  }
+
   function compare(arr, array, string) { //comparing two arrays
     let item;
     for (let x = 0; x < arr.length; x++) {
